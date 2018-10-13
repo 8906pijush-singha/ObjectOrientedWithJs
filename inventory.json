@@ -1,0 +1,8 @@
+{"rice":[{"name":"basmati","weight":5,"price":78},
+    {"name":"brown","weight":5,"price":106},
+    {"name":"black","weight":5,"price":195}],
+"pulses":[{"name":"chana","weight":5,"price":55},
+    {"name":"masoor","weight":5,"price":42},
+    {"name":"moong","weight":5,"price":49}],
+"wheats":[{"name":"Aashirvaad","weight":5,"price":51},
+    {"name":"chakki","weight":5,"price":38}]}
