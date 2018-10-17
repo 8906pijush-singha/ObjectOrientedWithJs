@@ -375,11 +375,11 @@ function buyShare(rl){
                                             let time=new Date().getDate()+'\\'+(parseInt(new Date().getMonth())+parseInt(1)+'\\'+new Date().getFullYear());
                                             let info1=control[1].name+' ,you bought '+no+' shares of '+element.name+' on '+ time;
                                             let info2=element.name+' ,you sold '+no+' shares to '+control[1].name+' on '+ time;
-                                            console.log(element.shareInfo);
 
                                             let companyShares=new CompanyShares(control[1].username,control[1].shareNo,control[1].dateTime,'bought');
                                             //element.shareinfo.push(companyShares.details);
                                             element.shareinfo.push(info2);
+
                                             User.shareInfo1.add(info1);
                                             Stock.shareInfo1.add(info2);
                                             StockAccount.stockSymbol.push(element.username);

@@ -185,18 +185,18 @@ function entryUpdate(){
         rl.question('enter the name that you want to delete : ',function(name){
             let data=JSON.parse(fs.readFileSync('./addressbook.json','utf8'));
             let len=data.details.length;
-            let temp=0;
+            let index=0;
             data.details.forEach(element => {
                 if(element._name==name){
                     userDetails(element);
-                    data.details.splice(temp,1);
+                    data.details.splice(index,1);
                     fs.writeFileSync('./addressbook.json',JSON.stringify(data),'utf8');
                     console.log('this data is deleted.');
                 }else{
-                    temp++;
+                    index++;
                 }
             });
-            if(len==temp){
+            if(len==index){
                 console.log('no such element');
             }
             callback();

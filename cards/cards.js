@@ -19,7 +19,9 @@ class Card{
             cards[i] = cards[j];
             cards[j] = temp;
         }
-    }
+    }/**
+     * to make a integer rank for all the cards
+     */
     get rank1(){
         if(this.rank<=10)
             return this.rank;
