@@ -35,6 +35,30 @@ let utility=require('./stockUtility')
         }   
     });
 }
+function showUserReport(){
+    console.log('Users details: \n')
+    fs.readFile(appRoot + '/user.json','utf8',(err,data) => {
+    if(err) {
+        console.log(err);
+    }else
+    {
+        /**
+         * converting the string data to js object
+         */
+        data=JSON.parse(data);
+        data.Stock.forEach(element => {
+        console.log('user name='+element.name);
+        console.log('user symbol='+element.username);
+        console.log('No of total share='+element.shareNo);
+        console.log('share price='+element.sharePrice+'\n');
+        });
+    }   
+});
+}
+/**
+ * 
+ * @param {readline} rl 
+ */
 function companyRegistration(rl){
     //to take json input
     let data=JSON.parse(fs.readFileSync(appRoot+'/stockDB.json','utf8'));
@@ -66,7 +90,7 @@ function companyRegistration(rl){
                                 /**
                                  * creating the stock object  
                                  */
-                                let stock=new Stock(name,no,price);
+                                let stock=new utility.Stock(name,no,price);
                                 data.Stock.push(stock);
                                 recursion();
                             }    
@@ -86,5 +110,6 @@ function companyRegistration(rl){
 
  module.exports={
      showStockReport,
+     showUserReport,
      companyRegistration
  }

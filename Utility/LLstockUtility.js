@@ -1,16 +1,125 @@
 /*************************************************************************
- * @description :utility functions
+ * @description : StockManagement using linkedlist
  * @author  Pijush Singha
  * @version 1.0
- * @since 12/10/2018
+ * @since 15/10/2018
  *************************************************************************/
 let ds=require('../../DataStructureWithJs/dataStructure')
+
+class StockAccount{
+    constructor(name){
+        this.name=name;
+        this.shareInfo1;
+        this.stockSymbol;
+        this.dateTime;
+    }
+    static get shareInfo1(){
+        return new ds.linkedList();
+    }
+    static get stockSymbol(){
+        return new ds.Stack();
+    }
+    static get dateTime(){
+        return new ds.Queue();
+    }
+}
+
+StockAccount.prototype.showStockReport=function(){
+    utility1.showStockReport();
+    //utility1.showUserReport();
+}
+
+ /**
+ * defination of stock class
+ */
+
+class Stock extends StockAccount{
+    constructor(name,no,price){
+        super(name);
+        this.password=name;
+        this.name=name.toUpperCase();
+        this.shareNo=no;
+        this.sharePrice=price;
+        this.username=this.password+110;
+        this.shareinfo=[];
+    }
+    get shareNo1(){
+        return this.shareNo;
+    }
+    set shareNo1(value){
+        this.shareNo=value;
+    }
+}
+
+/**
+ * overriding toString()
+ */
+
+Stock.prototype.toString=function(){
+    return 'name='+this.name+'\n'+
+            'user-name='+this.username+'\n'+
+            'password='+this.password+'\n'+
+            'total no of share='+this.shareNo+'\n'+
+            'share price='+ this.price +'\n'+
+            'and your share info is'+this.shareinfo;;
+}
+
+/**
+ * user object model
+ */
+class User extends StockAccount{
+    constructor(name){
+        super(name);
+        this.username=name+220;
+        this.password=name;
+        this.shareNo=0;
+        this.sharePrice=0;
+        this.shareinfo=[];
+    }
+    get shareNo1(){
+        return this.shareNo;
+    }
+    set shareNo1(value){
+        this.shareNo=value;
+    }
+
+ }
+ User.prototype.printReport=function(){
+    console.log(this.shareinfo);
+}
+
+ /**
+  * toString override 
+  */
+ User.prototype.toString=function(){
+    return 'name='+this.name.toUpperCase()+'\n'+
+            'user-name='+this.username+'\n'+
+            'password='+this.password+'\n'+
+            'total no of shares you bought='+this.shareNo+'\n'+
+            'your share price='+this.sharePrice+'\n'+
+            'and your share info is'+this.shareinfo;
+ }
+
+class CompanyShares{
+    constructor(symbol,shareNo,dateTime,type){
+        this.symbol=symbol;
+        this.shareNo=shareNo;
+        this.dateTime=dateTime;
+        this.type=type;
+    }
+    get details(){
+        return this.symbol +' '+type +' '+ this.shareNo+ ' on'+this.dateTime;
+    }
+}
+
+let utility=require('./stockUtility');
+let utility1=require('./utility');
+
 /**
  * control is to save the user control in control[0] and control[1]
  */
 let control=[];
 var appRoot = process.cwd();
-let utility=require('./utility');
 /**
  * requiring the fs module
  */
@@ -123,8 +232,8 @@ function userDetails(element){
                 console.log('you have '+element[key]+' no of shares.'+'\n');
             else if(key=='sharePrice')
                 console.log('your share price is '+element[key]+' rupees/share\n');
-            else if(key=='shareInfo')
-                console.log('your transections are:\n'+element.shareInfo.join().replace(/\,/g,'\n'));
+            else if(key=='shareinfo')
+                console.log('your transactions are :\n'+element[key].join().replace(/\,/g,'\n'));
             
         }
     }
@@ -158,7 +267,7 @@ function userRegistration(rl){
         let data=JSON.parse(fs.readFileSync('./user.json','utf8'));
         let user=new User(name);
         /**
-         * inserting oe more data
+         * inserting more data
          */
         data.Stock.push(user);
         /**
@@ -201,7 +310,7 @@ function companyRegistration(rl){
                                 console.log(stock.toString());
                                 control.push(data);                            
                                 control.push(stock);                                
-                                menu(rl);//calling the manu
+                                menu(rl);//calling the menu
                             }    
                             else{
                                 throw 'invalid input'
@@ -239,7 +348,7 @@ function menu(rl){
  * @param {readline} rl 
  */
 function buyShare(rl){
-    utility.showStockReport();
+    StockAccount.prototype.showStockReport();
     console.log("\nplease enter the company symbol properly to buy that company shares:")
     rl.question('',function(symbol){
         fs.readFile(appRoot + '/stockDB.json','utf8',(err,data) => {
@@ -266,14 +375,23 @@ function buyShare(rl){
                                             let time=new Date().getDate()+'\\'+(parseInt(new Date().getMonth())+parseInt(1)+'\\'+new Date().getFullYear());
                                             let info1=control[1].name+' ,you bought '+no+' shares of '+element.name+' on '+ time;
                                             let info2=element.name+' ,you sold '+no+' shares to '+control[1].name+' on '+ time;
+                                            console.log(element.shareInfo);
+
+                                            let companyShares=new CompanyShares(control[1].username,control[1].shareNo,control[1].dateTime,'bought');
+                                            //element.shareinfo.push(companyShares.details);
                                             element.shareinfo.push(info2);
-                                            control[1].shareinfo.push(info1);
+                                            User.shareInfo1.add(info1);
+                                            Stock.shareInfo1.add(info2);
+                                            StockAccount.stockSymbol.push(element.username);
+                                            StockAccount.dateTime.push(time);
+
                                             /**
                                              * showing user details to the console
                                              */  
                                             userDetails(element);  
                                             console.log('\n'+info1);
                                             console.log('and '+(parseInt(no)*parseInt(element.sharePrice))+' is debited from your bank account');
+                                            control[1].shareinfo.push(info1);
                                             control[1].shareNo=control[1].shareNo+parseInt(no);
                                             control[1].sharePrice=element.sharePrice ;
                                             /**
@@ -319,8 +437,8 @@ function sellShare(rl){
         /**
          * showing all the possible customers
          */
-        utility.showStockReport();
-        utility.showUserReport();
+        utility1.showStockReport();
+        utility1.showUserReport();
         rl.question('\nwhom do you want to sell your shares,\n\n enter symbol or username :\n',function(symbol){
             rl.question('\nhow many shares you want to sell: ',function(no){
                 if(/110/.test(symbol)){
@@ -340,8 +458,11 @@ function sellShare(rl){
                                     let time=new Date().getDate()+'\\'+(parseInt(new Date().getMonth())+parseInt(1)+'\\'+new Date().getFullYear());
                                     let info1=element.name+' ,you bought '+no+' shares of '+control[1].name+' on '+ time;
                                     let info2=control[1].name+' ,you sold '+no+' shares to '+element.name+' on '+ time;
-                                    element.shareinfo.push(info1);
-                                    control[1].shareinfo.push(info2);
+                                    StockAccount.shareInfo.add(info1);
+                                            StockAccount.stockSymbol.push(element.username);
+                                            StockAccount.shareInfo.add(info2);
+                                            StockAccount.dateTime.push(time);
+
                                     /**
                                      * showing the user details to the console
                                      */
@@ -384,8 +505,10 @@ function sellShare(rl){
                                     
                                     let info1=element.name+' ,you bought '+no+' shares of '+control[1].name+' on '+ time;
                                     let info2=control[1].name+' ,you sold '+no+' shares to '+element.name+' on '+ time;
-                                    element.shareinfo.push(info1);
-                                    control[1].shareinfo.push(info2); 
+                                    StockAccount.shareInfo.add(info1);
+                                    StockAccount.shareInfo.add(info2); 
+                                            StockAccount.dateTime.push(time);
+                                            StockAccount.stockSymbol.push(element.username);
                                     /**
                                      * showing the user data to the console
                                      */
@@ -410,78 +533,15 @@ function sellShare(rl){
         })
     }
 }
-class StockAccount{
-    constructor(name){
-        this.name=name;
-        this.shareInfo1;
-        this.stockSymbol;
-        this.dateTime;
-    }
-    static get shareInfo1(){
-        return new ds.linkedList();
-    }
-    static get stockSymbol(){
-        return new ds.Stack();
-    }
-    static get dateTime(){
-        return new ds.Queue();
-    }
+
+
+
+module.exports={
+    checkUser,
+    checkCompany,
+    userDetails,
+    registration,
+    StockAccount,
+    User,
+    Stock
 }
-/**
- * user object model
- */
- class User extends StockAccount{
-    constructor(name){
-        super(name);
-        this.username=name+220;
-        this.password=name;
-        this.shareNo=0;
-        this.sharePrice=0;
-        this.shareinfo=[];
-    }
- }
- /**
-  * toString override 
-  */
- User.prototype.toString=function(){
-    return 'name='+this.name.toUpperCase()+'\n'+
-            'user-name='+this.username+'\n'+
-            'password='+this.password+'\n'+
-            'total no of shares you bought='+this.shareNo+'\n'+
-            'your share price='+this.sharePrice+'\n'+
-            'and your share info is'+this.shareinfo;
- }
- /**
- * defination of stock class
- */
-class Stock extends StockAccount{
-    constructor(name,no,price){
-        super(name);
-        this.password=name;
-        this.shareNo=no;
-        this.sharePrice=price;
-        this.username=this.password+110;
-        this.shareinfo=[];
-    }
-}
-/**
- * overriding toString()
- */
-Stock.prototype.toString=function(){
-    return 'name='+this.name+'\n'+
-            'user-name='+this.username+'\n'+
-            'password='+this.password+'\n'+
-            'total no of share='+this.shareNo+'\n'+
-            'share price='+ this.price +'\n'+
-            'and your share info is'+this.shareinfo;;
- }
- module.exports={
-     checkUser,
-     checkCompany,
-     User,
-     registration,
-     companyRegistration,
-     Stock,
-     buyShare,
-     sellShare
- }

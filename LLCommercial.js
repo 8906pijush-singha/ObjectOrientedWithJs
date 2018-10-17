@@ -1,10 +1,10 @@
 /*************************************************************************
- * @description : StockManagement
+ * @description : StockManagement using linkedlist
  * @author  Pijush Singha
  * @version 1.0
- * @since 12/10/2018
+ * @since 15/10/2018
  *************************************************************************/
-let utility=require('./Utility/stockUtility');
+let utility=require('./Utility/LLstockUtility');
 /*
 *require('readline') is used to access the readline module
 */
@@ -27,12 +27,15 @@ var rl=readline.createInterface(process.stdin,process.stdout);
                 if(/110/.test(username)){
                     utility.checkCompany(username,rl);
                 }else if(/220/.test(username)){
-                    utility.checkUser(username,rl)
+                    utility.checkUser(username,rl);
                 }else{
                     console.log('invalid username');
                     rl.close();
                 }
+            }else{
+                console.log('invalid');
             }
+
         }else{
             /**
              * for new registration
