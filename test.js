@@ -1,17 +1,54 @@
 
 let fs=require('fs');
 let utility=require('./Utility/LLstockUtility')
+class Person{
+    constructor(){
+        /**
+         * making private property of a class 
+         */
+        let _name;
+        let _city;
+        this.setName=function(name){
+            _name=name;
+        }
+        this.setCity=function(city){
+            _city=city;
+        }
+        this.getName=function(){
+            return _name;
+        }
+        this.getCity=function(){
+           return _city;
+       }
+}
+      
+    }
+      /**
+         * to set the private properties
+         */
+      
+       /**
+         * to read the private properties
+         */
+      
+/**
+ * overriding toString 
+ */
+Person.prototype.toString=function(){
+       return 'name = '+this.getName()+'\n'+
+              'email = '+ this.getEmail()+'\n'+
+              'phone no = '+this.getPhonNo()+'\n'+
+              'zip = '+this.getPin()+'\n'+
+              'city = '+this.getCity(); 
+}
 
 function test()
 {
-
-    let user=new utility.StockAccount('pijush');
-    console.log(user);
-    let user1=new utility.User('pijush');
-    console.log(user1);
-    let user2=new utility.Stock('pijush',50,50);
-    console.log(user2);
-    console.log(user2.shareNo1);
+    let p=new Person();
+    p.setName('pijush');
+    p.setCity('asansol');
+    console.log(p.getName());
+    console.log(p);
 }
 test();
 

@@ -111,8 +111,6 @@ class CompanyShares{
         return this.symbol +' '+type +' '+ this.shareNo+ ' on'+this.dateTime;
     }
 }
-
-let utility=require('./stockUtility');
 let utility1=require('./utility');
 
 /**
