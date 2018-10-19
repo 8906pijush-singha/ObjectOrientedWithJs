@@ -6,22 +6,24 @@ class Person{
         /**
          * making private property of a class 
          */
-        let _name;
-        let _city;
-        this.setName=function(name){
-            _name=name;
-        }
-        this.setCity=function(city){
-            _city=city;
-        }
-        this.getName=function(){
-            return _name;
-        }
-        this.getCity=function(){
-           return _city;
-       }
+        this._name;
+        this._city;
+        // let _name;
+        // let _city;
+       
 }
-      
+setName(name){
+    this._name=name;
+}
+setCity(city){
+    this._city=city;
+}
+getName(){
+    return this._name;
+}
+getCity(){
+   return this._city;
+}
     }
       /**
          * to set the private properties
@@ -48,7 +50,7 @@ function test()
     p.setName('pijush');
     p.setCity('asansol');
     console.log(p.getName());
-    console.log(p);
+    console.log(p._city);
 }
 test();
 

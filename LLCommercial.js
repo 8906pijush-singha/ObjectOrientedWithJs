@@ -5,16 +5,16 @@
  * @since 15/10/2018
  *************************************************************************/
 let utility=require('./Utility/LLstockUtility');
-/*
-*require('readline') is used to access the readline module
-*/
+/**
+ * @description require('readline') is used to access the readline module
+ */
 var readline=require('readline');
 /*
 *readline.createInterface is used to access process.stdin and process.stdout
 */
 var rl=readline.createInterface(process.stdin,process.stdout);
 /**
- * test function declaretion
+ * @function test function declaretion
  */
  function test(){
     console.log('welcome to share market'+'\n\nif you have already registered please enter your user-name');
